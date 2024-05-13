@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.junclabs.bookshelf.ui.BooksApp
 import com.junclabs.bookshelf.ui.theme.BookshelfTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BookshelfTheme {
-
+                BooksApp()
             }
         }
     }
