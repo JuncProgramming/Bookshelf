@@ -9,5 +9,5 @@ interface BookApiService {
     @GET("volumes")
     suspend fun getPhotos(@Query("q") query: String): List<BookPhoto>
     @GET("volumes/{id}")
-    suspend fun getPhoto(@Path("id") id: Int): BookPhoto
+    suspend fun getPhoto(@Path("id") id: String): BookPhoto
 }
