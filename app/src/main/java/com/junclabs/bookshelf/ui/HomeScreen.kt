@@ -19,12 +19,10 @@ import com.junclabs.bookshelf.R
 
 @Composable
 fun HomeScreen(
-    UiState: UiState,
-    retryAction: () -> Unit,
-    modifier: Modifier = Modifier
+    uiState: UiState, retryAction: () -> Unit, modifier: Modifier = Modifier
 ) {
-    when (UiState) {
-        is UiState.Success -> BookList(books = UiState.photos, modifier = modifier)
+    when (uiState) {
+        is UiState.Success -> BookList(books = uiState.photos, modifier = modifier)
         is UiState.Loading -> LoadingScreen()
         is UiState.Error -> ErrorScreen(retryAction = retryAction)
     }
@@ -34,18 +32,21 @@ fun HomeScreen(
 @Composable
 fun BooksApp() {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { BooksTopAppBar(scrollBehavior = scrollBehavior) }
+    Surface(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Surface(
-            modifier = Modifier.fillMaxSize().padding(it)
-        ) {
-            val booksViewModel: BookViewModel = viewModel(factory = BookViewModel.Factory)
-            HomeScreen(
-                UiState = booksViewModel.uiState,
-                retryAction = booksViewModel::getPhotos
-            )
+        Scaffold(modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = { BooksTopAppBar(scrollBehavior = scrollBehavior) }) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+            ) {
+                val booksViewModel: BookViewModel = viewModel(factory = BookViewModel.Factory)
+                HomeScreen(
+                    uiState = booksViewModel.uiState, retryAction = booksViewModel::getPhotos
+                )
+            }
         }
     }
 }
@@ -54,13 +55,11 @@ fun BooksApp() {
 @Composable
 fun BooksTopAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
-        scrollBehavior = scrollBehavior,
-        title = {
+        scrollBehavior = scrollBehavior, title = {
             Text(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.headlineSmall,
             )
-        },
-        modifier = modifier
+        }, modifier = modifier
     )
 }

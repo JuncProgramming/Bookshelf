@@ -23,7 +23,7 @@ class BookViewModel(private val bookRepository: BookRepository): ViewModel() {
     fun getPhotos() {
         viewModelScope.launch {
             uiState = try {
-                UiState.Success(bookRepository.getPhotos())
+                UiState.Success(bookRepository.getPhotos("lmao"))
             } catch (e: Exception) {
                 UiState.Error
             }
