@@ -26,7 +26,7 @@ fun BookCard(book: BookPhoto) {
     Card {
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)
-            .data(book.image.replace("http", "https"))
+            .data(book.volumeInfo.imageLinks.httpsThumbnail)
             .crossfade(true)
             .build(),
             contentDescription = null,
