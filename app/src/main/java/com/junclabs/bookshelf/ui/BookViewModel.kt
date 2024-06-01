@@ -20,22 +20,13 @@ class BookViewModel(private val bookRepository: BookRepository): ViewModel() {
         getPhotos()
     }
 
-    fun getPhotos() {
+    fun getPhotos(query: String = "juncewicz") {
+        if (query.isEmpty()) return
         viewModelScope.launch {
-            uiState = try {
-                UiState.Success(bookRepository.getPhotos("lmao"))
-            } catch (e: Exception) {
-                UiState.Error
-            }
-        }
-    }
-
-    fun getPhoto() {
-        viewModelScope.launch {
-            uiState = try {
-                UiState.Success(photos = mutableListOf())
-            } catch (e: Exception) {
-                UiState.Error
+            uiState = UiState.Loading
+            val result = bookRepository.getPhotos(query)
+            uiState = result.let {
+                UiState.Success(it)
             }
         }
     }
