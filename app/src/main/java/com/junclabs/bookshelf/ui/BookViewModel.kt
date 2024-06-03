@@ -26,7 +26,11 @@ class BookViewModel(private val bookRepository: BookRepository): ViewModel() {
             uiState = UiState.Loading
             val result = bookRepository.getPhotos(query)
             uiState = result.let {
-                UiState.Success(it)
+                try {
+                    UiState.Success(it)
+                } catch (e: Exception) {
+                    UiState.Error
+                }
             }
         }
     }
