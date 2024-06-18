@@ -20,7 +20,7 @@ class BookViewModel(private val bookRepository: BookRepository): ViewModel() {
         getPhotos()
     }
 
-    fun getPhotos(query: String = "juncewicz") {
+    fun getPhotos(query: String = "california") {
         if (query.isEmpty()) return
         viewModelScope.launch {
             uiState = UiState.Loading
