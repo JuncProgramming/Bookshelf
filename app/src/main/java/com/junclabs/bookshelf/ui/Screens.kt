@@ -19,14 +19,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.junclabs.bookshelf.model.BookPhoto
+import com.junclabs.bookshelf.model.BookVolumes
+import com.junclabs.bookshelf.model.Item
 
 @Composable
-fun BookCard(book: BookPhoto) {
+fun BookCard(book: Item) {
     Card {
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)
-            .data(book.volumeInfo.imageLinks.httpsThumbnail)
+            .data(book.volumeInfo.imageLinks.thumbnail.replace("http", "https"))
             .crossfade(true)
             .build(),
             contentDescription = null,
@@ -38,7 +39,7 @@ fun BookCard(book: BookPhoto) {
 
 @Composable
 fun BookList(
-    books: List<BookPhoto>,
+    books: BookVolumes,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(8.dp),
 ) {
@@ -47,7 +48,7 @@ fun BookList(
         modifier = modifier.padding(horizontal = 8.dp),
         contentPadding = contentPadding,
     ) {
-        items(items = books, key = { book -> book.hashCode() }) { book ->
+        items(items = books.items) { book ->
             BookCard(book = book)
         }
     }
