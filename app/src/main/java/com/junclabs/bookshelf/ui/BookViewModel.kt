@@ -25,6 +25,8 @@ class BookViewModel(private val bookRepository: BookRepository): ViewModel() {
         viewModelScope.launch {
             uiState = UiState.Loading
             val result = bookRepository.getPhotos(query)
+            /* whoever designed a backend response that has fields that appear and
+            disappear depending on the search is a fucking moron */
             uiState = result.let {
                 try {
                     UiState.Success(it)
