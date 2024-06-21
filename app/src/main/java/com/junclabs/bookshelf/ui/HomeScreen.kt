@@ -19,10 +19,14 @@ import com.junclabs.bookshelf.R
 
 @Composable
 fun HomeScreen(
-    uiState: UiState, retryAction: () -> Unit, modifier: Modifier = Modifier
+    uiState: UiState,
+    retryAction: () -> Unit,
+    onBooksSearch: (String) -> Unit,
 ) {
     when (uiState) {
-        is UiState.Success -> BookList(books = uiState.photos, modifier = modifier)
+        is UiState.Success -> BooksSearchScreen(
+            books = uiState.photos, onBooksSearch = onBooksSearch
+        )
         is UiState.Loading -> LoadingScreen()
         is UiState.Error -> ErrorScreen(retryAction = retryAction)
     }
@@ -44,7 +48,7 @@ fun BooksApp() {
             ) {
                 val booksViewModel: BookViewModel = viewModel(factory = BookViewModel.Factory)
                 HomeScreen(
-                    uiState = booksViewModel.uiState, retryAction = booksViewModel::getPhotos
+                    uiState = booksViewModel.uiState, retryAction = booksViewModel::getPhotos, onBooksSearch = booksViewModel::getPhotos
                 )
             }
         }
