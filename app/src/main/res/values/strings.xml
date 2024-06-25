@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Bookshelf</string>
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
+    <string name="try_again">Try again</string>
+    <string name="search">Search</string>
 </resources>
